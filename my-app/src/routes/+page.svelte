@@ -1,15 +1,44 @@
-<!-- YOU CAN DELETE EVERYTHING IN THIS PAGE -->
+<script lang="ts">
+// @ts-ignore
+	import { Swipe, SwipeItem } from "svelte-swipe";
+	import image1 from "$lib/images/1.jpeg"
+	import image2 from "$lib/images/2.jpeg"
+	import image3 from "$lib/images/3.jpeg"
 
-<div class="container h-full mx-auto flex justify-center items-center">
-	<div class="space-y-5">
-		<h1 class="h1">Let's get cracking bones!</h1>
-		<p>Start by exploring:</p>
-		<ul>
-			<li><code class="code">/src/routes/+layout.svelte</code> - barebones layout</li>
-			<li><code class="code">/src/app.postcss</code> - app wide css</li>
-			<li>
-				<code class="code">/src/routes/+page.svelte</code> - this page, you can replace the contents
-			</li>
-		</ul>
+	const images: string[] = [image1, image2, image3]
+	const swipeConfig = {
+	  autoplay: false,
+	  delay: 2000,
+	  transitionDuration: 200,
+	  defaultIndex: 0,
+	  allow_infinite_swipe: true,
+	};
+
+	let SwipeComp: Swipe;
+
+	function nextSlide(){
+		SwipeComp.nextItem()
+	}
+
+	function prevSlide(){
+		SwipeComp.prevItem()
+	}
+  </script>
+  
+  
+  <div class="w-full h-screen flex justify-center items-center">
+	<div class="w-2/3 h-[50vh] flex flex-col items-center p-3 justify-center">
+		<Swipe {...swipeConfig} bind:this={SwipeComp}>
+			{#each images as image}
+				<SwipeItem>
+				<img src={image} alt="" class="w-full h-[40vh]">
+				</SwipeItem>
+			{/each}
+		</Swipe>
+		<div class="flex gap-4">
+			<button class="btn variant-ghost-primary" on:click={prevSlide}>Prev</button>
+			<button class="btn variant-ghost-primary" on:click={nextSlide}>Next</button>
+		  </div>
 	</div>
-</div>
+  </div>
+  
