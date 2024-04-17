@@ -23,12 +23,21 @@
 	function prevSlide(){
 		SwipeComp.prevItem()
 	}
+
+	function handleSwipe(event: CustomEvent) {
+		console.log(event.detail)
+		// logs swipe direction and item index
+	}
   </script>
   
   
   <div class="w-full h-screen flex justify-center items-center">
 	<div class="w-2/3 h-[50vh] flex flex-col items-center p-3 justify-center">
-		<Swipe {...swipeConfig} bind:this={SwipeComp}>
+		<Swipe 
+			{...swipeConfig} 
+			bind:this={SwipeComp}
+			on:change={handleSwipe}
+			>
 			{#each images as image}
 				<SwipeItem>
 				<img src={image} alt="" class="w-full h-[40vh]">
