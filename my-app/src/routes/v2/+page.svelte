@@ -8,12 +8,19 @@
     let liked = new Set<string>()
     let disliked = new Set<string>()
     let direction: string;
-    let target: string;
     let index: number = 0
     
-    function handler(event: CustomEvent) {
+    function handler(event: CustomEvent) { 
         direction = event.detail.direction;
-        if (direction === "left") {
+        
+        // INVALID SWIPES, IMAGE QUEUE EMPTY
+        if (index === images.length
+            || direction === "top"
+            || direction === "bottom")
+                 return
+
+        // RIGHT FOR LIKE, LEFT FOR DISLIKE
+        if (direction === "right") {
             liked.add(images[index].split('.')[0].substring(16))
         } else {
             disliked.add(images[index].split('.')[0].substring(16))
@@ -21,13 +28,19 @@
 
         console.log("Liked: ", liked,)
         console.log("Disliked: ", disliked)
-        index = (index + 1) % images.length
+        index++
     }
     </script>
     
     <div use:swipe={{ timeframe: 300, minSwipeDistance: 60 }} on:swipe={handler} class="w-full h-screen flex items-center justify-center">
         <div>
             direction: {direction}
-            <img src={images[index]} alt="" class="w-full h-[40vh]">
+            {#if index == images.length}
+                <p>OUT OF SWIPES</p>
+            {:else}
+                <img src={images[index]} 
+                alt="" 
+                class="w-full h-[40vh]">
+            {/if}
         </div>
     </div>
