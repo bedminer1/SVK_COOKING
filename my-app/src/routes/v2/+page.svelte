@@ -32,15 +32,16 @@
     }
     </script>
     
-    <div use:swipe={{ timeframe: 300, minSwipeDistance: 60 }} on:swipe={handler} class="w-full h-screen flex items-center justify-center">
-        <div>
+    <div class="w-full h-screen flex items-center justify-center">
+        <div use:swipe={{ timeframe: 300, minSwipeDistance: 60 }} on:swipe={handler}>
             direction: {direction}
             {#if index == images.length}
                 <p>OUT OF SWIPES</p>
             {:else}
                 <img src={images[index]} 
                 alt="" 
-                class="w-full h-[40vh]">
+                class="w-full h-[40vh] pointer-events-none select-none"
+                >
             {/if}
         </div>
     </div>
