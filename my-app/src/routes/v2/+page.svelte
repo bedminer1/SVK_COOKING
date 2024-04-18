@@ -3,7 +3,7 @@
     import image1 from "$lib/images/1.jpeg"
 	import image2 from "$lib/images/2.jpeg"
 	import image3 from "$lib/images/3.jpeg"
-    import { fly } from 'svelte/transition'
+    import { fly, fade } from 'svelte/transition'
 
 	const images: string[] = [image1, image2, image3]
     let liked = new Set<string>()
@@ -25,7 +25,7 @@
         transitionActive = true
         setTimeout(() => {
             transitionActive = false
-        }, 500)
+        }, 200)
 
         // RIGHT FOR LIKE, LEFT FOR DISLIKE
         if (direction === "right") {
@@ -42,14 +42,16 @@
     
     <div class="w-full h-screen flex items-center justify-center"
     >
-        <div use:swipe={{ timeframe: 600, minSwipeDistance: 10 }} on:swipe={handler}>
+        <div use:swipe={{ timeframe: 600, minSwipeDistance: 5 }} on:swipe={handler}>
             direction: {direction}
             {#if index == images.length}
                 <p>OUT OF SWIPES</p>
             {:else if !transitionActive}
                 <img src={images[index]} 
                 alt="" 
-                out:fly={{duration: 100, x: direction === "right" ? 200 : -200}}
+                out:fly={{duration: 70, x: direction === "right" ? 100 : -100}}
+                in:fly={{duration: 70, x: direction === "right" ? -100 : 100}}
+
                 class="w-full h-[40vh] pointer-events-none select-none"
                 >
             {/if}
